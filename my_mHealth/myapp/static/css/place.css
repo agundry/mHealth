@@ -1,0 +1,169 @@
+/*!
+ * Start Bootstrap - Grayscale Bootstrap Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+.profile {
+    height: auto;
+    margin-top: 100px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.profiles {
+    background-color: rgba(255,255,255,0.5);
+    padding-top: 2em;
+}
+
+.profiles label {
+
+}
+ .place-container {
+    background: url(../img/blur-background.jpg) top center fixed;
+    background-size: cover;
+ }
+
+figure {
+    margin: 10px;
+}
+
+.yelp-img img{
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.description {
+    font-size: 1em;
+    margin: -1em 0 1em 0;
+}
+
+.place-box {
+    height: 150px;
+    width: 230px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.bg-hover {
+    background-color: rgba(255,255,255,0.5);
+}
+
+.bg-hover:hover {
+    background-color: white;
+}
+
+.outer-box {
+    width: 100&
+}
+
+.place {
+    display: table;
+    width: 100%;
+    height: auto;
+    padding: 200px 0;
+    text-align: center;
+    margin-top: 100px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.brand-heading {
+    color: black;
+}
+
+
+@media(min-width:768px) {
+    .place {
+        height: 100%;
+        padding: 0;
+    }
+
+    .brand-heading {
+        font-size: 3em;
+    }
+
+    .place .place-body .place-text {
+        font-size: 2em;
+    }
+}
+
+#itineraryButton {
+    margin-bottom: 3em;
+    border-radius: 0.5em;
+    border-color: transparent;
+    font-size: 1.5em;
+    text-transform: lowercase;
+}
+
+.info-icon {
+    text-align: right;
+    display: none;
+    margin: 10px 0;
+}
+
+.info-icon a {
+    color: grey;
+    transition: 0.5s;
+}
+
+.info-icon a:hover {
+    opacity: 0.8;
+}
+
+.bg-hover:hover .info-icon{
+    display: block;
+}
+
+.othericon{
+    display: block;
+}
+
+.itinerary {
+    color: black;
+    background-color: rgba(255,255,255,0.5);
+    padding: 1.5em;
+    margin: 2em 0;
+    font-size: 80%;
+}
+
+.itinerary em {
+    color: #b7337a;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.flex-box {
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.flex-item {
+    flex-basis: 100px;
+    margin: 0 5px;
+}
+
+.itinerary .info-icon {
+    display: block;
+    font-size: 1.2em;
+}
+
+.result-description {
+    margin-top: 2em;
+}
+.result-description h3, .result-description h4 {
+    text-transform: none;
+    font-weight: 400;
+}

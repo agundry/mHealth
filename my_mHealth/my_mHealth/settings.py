@@ -56,7 +56,7 @@ ROOT_URLCONF = 'my_mHealth.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/Users/Austin/Documents/Northwestern/mHealth/my_mHealth/my_mHealth/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

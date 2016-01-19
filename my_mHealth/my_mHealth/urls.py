@@ -18,4 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', 'myapp.views.index'),
+    url(r'^sensor/', 'myapp.views.sensor'),
+    url(r'^update/', 'myapp.views.update')
 ]
