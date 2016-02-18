@@ -5,7 +5,7 @@ $(document).ready( function() {
 
 function updatePage() {
     $.ajax({
-        url: "http://192.168.1.124:8000/update",
+        url: "http://10.105.135.121:8000/update",
         success : function(data) {
             console.log(data);
             if (data == "Hello") {

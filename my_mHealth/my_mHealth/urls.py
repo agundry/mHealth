@@ -20,5 +20,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', 'myapp.views.index'),
     url(r'^sensor/', 'myapp.views.sensor'),
-    url(r'^update/', 'myapp.views.update')
+    url(r'^update/', 'myapp.views.update'),
+    url(r'^beacon/', 'myapp.views.beaconUpdate'),
+    url(r'^lastbeacon/', 'myapp.views.checkLastBeacon'),
+    url(r'^addUser/', 'myapp.views.addUser')
 ]
