@@ -28,8 +28,10 @@ def beaconUpdate(request):
     status = beaconOutput.get("status")
     device_id = beaconOutput.get("device_id")
     estimote_id = beaconOutput.get("prox_uuid")
+    major = beaconOutput.get("major")
+    minor = beaconOutput.get("minor")
     deviceOwner = DeviceUser.objects.get(device=device_id)
-    new_reading = BeaconReading.objects.create(user=deviceOwner, status=status,beacon=estimote_id)
+    new_reading = BeaconReading.objects.create(user=deviceOwner, status=status,beacon=estimote_id, major=major, minor=minor)
     new_reading.save()
     topReading = BeaconReading.objects.all().order_by("-id")[0]
     return HttpResponse(topReading)
