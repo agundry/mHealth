@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from models import ProximityReading
 from models import BeaconReading
 from models import DeviceUser
+from datetime import datetime, timedelta
+from django.utils import timezone
 import json
 from django.shortcuts import render_to_response
 
@@ -52,3 +54,12 @@ def addUser(request):
     new_user = DeviceUser.objects.get_or_create(email=new_email, device=new_device)
     new_user.save()
     return HttpResponse(new_email)
+
+def deleteReadings(request):
+    BeaconReading.objects.all().delete()
+    return render_to_response('delete.html')
+
+def checkBeaconSinceTime(request):
+    # input_time = json.loads(request.GET['time'])
+    readingsSinceTime = BeaconReading.objects.filter(time__gte=timezone.now()-timedelta(days=4))
+    return HttpResponse(readingsSinceTime.values())
