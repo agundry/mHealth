@@ -15,5 +15,5 @@ class BeaconReading(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(DeviceUser)
     status = models.CharField(max_length=10, blank=False, default='')
-    beacon = models.CharField(max_length=30, blank=False)
+    beacon = models.CharField(max_length=40, blank=False)
     time = models.DateTimeField(auto_now_add=True)

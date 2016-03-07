@@ -1,13 +1,9 @@
 from django.http import HttpResponse
-from models import ProximityReading
-from models import BeaconReading
-from models import DeviceUser
+from .models import ProximityReading, BeaconReading, DeviceUser
 from datetime import datetime, timedelta
 from django.utils import timezone
 import json
 from django.shortcuts import render_to_response
-
-ESTIMOTES = {"b9407f30-f5f8-466e-aff9-25556b57fe6d":"Icy Marshmallow"}
 
 # Create your views here.
 def index(request):
@@ -33,7 +29,7 @@ def beaconUpdate(request):
     device_id = beaconOutput.get("device_id")
     estimote_id = beaconOutput.get("prox_uuid")
     deviceOwner = DeviceUser.objects.get(device=device_id)
-    new_reading = BeaconReading.objects.create(user=deviceOwner, status=status,beacon=ESTIMOTES.get(estimote_id))
+    new_reading = BeaconReading.objects.create(user=deviceOwner, status=status,beacon=estimote_id)
     new_reading.save()
     topReading = BeaconReading.objects.all().order_by("-id")[0]
     return HttpResponse(topReading)
@@ -52,7 +48,6 @@ def addUser(request):
     new_email = input_user.get("email")
     new_device = input_user.get("device_id")
     new_user = DeviceUser.objects.get_or_create(email=new_email, device=new_device)
-    new_user.save()
     return HttpResponse(new_email)
 
 def deleteReadings(request):
