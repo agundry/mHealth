@@ -56,7 +56,7 @@ ROOT_URLCONF = 'myapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['/Users/Austin/Documents/Northwestern/mHealth/my_mHealth/my_mHealth/templates'],
+        'DIRS': ['/home/abgundry/mHealth/my_mHealth/my_mHealth/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'my_mHealth.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydb',
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST':'127.0.0.1',
-        'PORT': '3306',
+        'NAME': 'abgundry$default',
+        'USER': 'abgundry',
+        'PASSWORD': 'mHealth1',
+        'HOST':'mysql.server',
+        'PORT': '',
     }
 }
 
