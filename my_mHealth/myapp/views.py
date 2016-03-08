@@ -60,3 +60,12 @@ def checkBeaconSinceTime(request):
     # input_time = json.loads(request.GET['time'])
     readingsSinceTime = BeaconReading.objects.filter(time__gte=timezone.now()-timedelta(days=4))
     return HttpResponse(readingsSinceTime.values())
+
+def infectionReport(request):
+    return render_to_response('infectionReport.html')
+
+def searchConnections(request):
+    infected_email = request.GET['email']
+    infected_user = DeviceUser.objects.get(email=infected_email)
+    readings_since_incubation = BeaconReading.objects.filter(time__gte=timezone.now()-timedelta(days=3), user=infected_user)
+    return HttpResponse(readings_since_incubation.values())
