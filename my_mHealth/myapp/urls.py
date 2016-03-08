@@ -24,5 +24,7 @@ urlpatterns = [
     url(r'^lastbeacon/', views.checkLastBeacon),
     url(r'^addUser/', views.addUser),
     url(r'^delete/', views.deleteReadings),
-    url(r'^checkSince/', views.checkBeaconSinceTime)
+    url(r'^checkSince/', views.checkBeaconSinceTime),
+    url(r'^infectionReport/', views.infectionReport),
+    url(r'^searchConnections/', views.searchConnections)
 ]
