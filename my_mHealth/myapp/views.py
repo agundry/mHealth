@@ -68,4 +68,74 @@ def searchConnections(request):
     infected_email = request.GET['email']
     infected_user = DeviceUser.objects.get(email=infected_email)
     readings_since_incubation = BeaconReading.objects.filter(time__gte=timezone.now()-timedelta(days=3), user=infected_user)
-    return HttpResponse(readings_since_incubation.values())
+
+    # build dictionary keyed on beacons that contains all readings for that beacon
+    infection_beacons = build_infection_dict(readings_since_incubation)
+
+    # create dictionary that will have tuples associated with enter/exits of beacons
+    infection_tuples = build_infection_tuples(infection_beacons, readings_since_incubation)
+
+    # search for other users
+    all_users = DeviceUser.objects.all()
+    overlap_dict = dict()
+    for _user in all_users:
+        if _user != infected_user:
+            user_readings = BeaconReading.objects.filter(time__gte=timezone.now()-timedelta(days=3), user=_user)
+            _infection_beacons = build_infection_dict(user_readings)
+            _infection_tuples = build_infection_tuples(_infection_beacons, user_readings)
+            _overlaps = find_overlaps(infection_tuples, _infection_tuples)
+            overlap_dict[_user.email] = _overlaps
+
+    # get beacons where overlaps occured
+    for key in overlap_dict.keys():
+        for i in range(len(overlap_dict[key])):
+            interval = overlap_dict[key].pop(0)
+            overlap_dict[key].append((interval, BeaconReading.objects.get(time=interval[0]).beacon))
+
+
+    return HttpResponse(str(overlap_dict))
+
+def build_infection_dict(readings):
+    infection_dict = dict()
+    for reading in readings:
+        if not infection_dict.get(reading.major):
+            infection_dict[reading.major] = list()
+        infection_dict[reading.major].append(reading)
+
+    return infection_dict
+
+def build_infection_tuples(infection_dict, readings):
+    infection_tuples = dict()
+    last_reading = None
+    for key in infection_dict.keys():
+        infection_tuples[key] = list()
+
+    # edge case for exit without enter
+    if readings[0].status == 'exit':
+        infection_tuples[readings[0].major].append((timezone.now() - timedelta(days=3), readings.pop(0).time))
+
+    # edge case for enter without exit
+    if len(readings) % 2 != 0:
+        last_reading = readings.pop(len(readings) - 1)
+
+    # format statuses into tuples
+    for key in infection_dict.keys():
+        for reading in infection_dict[key]:
+            infection_tuples[key].append((infection_dict[key].pop(0).time, infection_dict[key].pop(0).time))
+
+    # add in last enter if applicable
+    if last_reading:
+        infection_tuples[last_reading.major].append((last_reading.time, timezone.now()))
+
+    return infection_tuples
+
+def find_overlaps(infected_tuples, bystander_tuples):
+    overlaps = list()
+    for key in infected_tuples.keys():
+        if bystander_tuples.get(key):
+            for i_tuple in infected_tuples[key]:
+                for b_tuple in bystander_tuples[key]:
+                    if (i_tuple[0] <= b_tuple[0] <= i_tuple[1]) or (b_tuple[0] <= i_tuple[0] <= b_tuple[1]):
+                        overlaps.append((max(i_tuple[0],b_tuple[0]), min(i_tuple[1], b_tuple[1])))
+    return overlaps
+
