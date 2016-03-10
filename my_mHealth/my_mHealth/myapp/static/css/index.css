@@ -1,0 +1,77 @@
+/*!
+ * Start Bootstrap - Grayscale Bootstrap Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+.intro-search {
+    margin: 0 1em;
+}
+
+
+#page-top > header > div > div > div > div {
+    background-color: rgba(255,255,255, 0.4);
+    padding: 10px 0;
+}
+
+#page-top > header > div > div > div > div > form > input {
+    color: black;
+}
+
+.intro-city {
+    height: 150px;
+    width: 230px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.intro-city img{
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto;
+}
+
+
+.intro {
+    display: table;
+    width: 100%;
+    height: auto;
+    padding: 100px 0;
+    text-align: center;
+    color: #fff;
+    background: url(../img/background.jpg) no-repeat top center scroll;
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.intro .intro-body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.intro .intro-body .brand-heading {
+    font-size: 30px;
+}
+
+.intro .intro-body .intro-text {
+    font-size: 18px;
+}
+
+@media(min-width:768px) {
+    .intro {
+        height: 100%;
+        padding: 0;
+    }
+
+    .intro .intro-body .brand-heading {
+        font-size: 60px;
+    }
+
+    .intro .intro-body .intro-text {
+        font-size: 26px;
+    }
+}

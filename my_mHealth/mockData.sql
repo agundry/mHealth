@@ -1,0 +1,16 @@
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('enter', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '7122', '62286', '2016-03-09 10:28:40', '1');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('enter', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '7122', '62286', '2016-03-09 10:29:00', '2');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('exit', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '7122', '62286', '2016-03-09 10:29:13', '1');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('exit', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '7122', '62286', '2016-03-09 10:29:15', '2');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('enter', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '30194', '9178', '2016-03-09 10:29:30', '3');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('enter', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '30194', '9178', '2016-03-09 10:29:34', '1');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('exit', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '30194', '9178', '2016-03-09 10:30:00', '1');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('exit', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '30194', '9178', '2016-03-09 10:30:10', '3');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('enter', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '38813', '15738', '2016-03-09 10:30:15', '2');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('enter', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '38813', '15738', '2016-03-09 10:30:25', '1');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('exit', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '38813', '15738', '2016-03-09 10:31:10', '1');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('exit', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '38813', '15738', '2016-03-09 10:31:15', '2');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('enter', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '7122', '62286', '2016-03-09 10:31:30', '1');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('enter', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '7122', '62286', '2016-03-09 10:31:36', '2');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('exit', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '7122', '62286', '2016-03-09 10:31:59', '1');
+insert into myapp_beaconreading (status, beacon, major, minor, time, user_id) values ('exit', 'b9407f30-f5f8-466e-aff9-25556b57fe6d', '7122', '62286', '2016-03-09 10:32:08', '2');

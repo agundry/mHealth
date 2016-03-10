@@ -1,0 +1,53 @@
+/*!
+ * Start Bootstrap - Grayscale Bootstrap Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+
+.profile-box {
+    height: 150px;
+    width: 230px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.profile-box img{
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: auto;
+}
+
+.profile {
+    display: table;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    margin-top: 100px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.profile .profile-body .brand-heading {
+    font-size: 30px;
+    color: black;
+}
+
+
+@media(min-width:768px) {
+    .place {
+        height: 100%;
+        padding: 0;
+    }
+
+    .place .place-body .brand-heading {
+        font-size: 3em;
+    }
+
+    .place .place-body .place-text {
+        font-size: 2em;
+    }
+}
