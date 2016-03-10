@@ -1,9 +1,11 @@
 from django.http import HttpResponse
 from .models import ProximityReading, BeaconReading, DeviceUser
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 from django.utils import timezone
 import json
 from django.shortcuts import render_to_response
+
+MAJORS = ["38813", "62225", "30194", "7122"]
 
 # Create your views here.
 def index(request):
@@ -84,22 +86,22 @@ def searchConnections(request):
             _infection_beacons = build_infection_dict(user_readings)
             _infection_tuples = build_infection_tuples(_infection_beacons, user_readings)
             _overlaps = find_overlaps(infection_tuples, _infection_tuples)
-            overlap_dict[_user.email] = _overlaps
+            overlap_dict[_user.email.encode("ascii")] = _overlaps
 
     # get beacons where overlaps occured
     for key in overlap_dict.keys():
         for i in range(len(overlap_dict[key])):
             interval = overlap_dict[key].pop(0)
-            overlap_dict[key].append((interval, BeaconReading.objects.get(time=interval[0]).beacon))
+            overlap_dict[key].append(((interval[1]-interval[0]).seconds, BeaconReading.objects.get(time=interval[0]).major.encode("ascii")))
+        overlap_dict[key] = get_aggregation(overlap_dict[key])
 
-
-    return HttpResponse(str(overlap_dict))
+    return HttpResponse(json.dumps(overlap_dict))
 
 def build_infection_dict(readings):
     infection_dict = dict()
     for reading in readings:
         if not infection_dict.get(reading.major):
-            infection_dict[reading.major] = list()
+            infection_dict[reading.major.encode("ascii")] = list()
         infection_dict[reading.major].append(reading)
 
     return infection_dict
@@ -139,3 +141,14 @@ def find_overlaps(infected_tuples, bystander_tuples):
                         overlaps.append((max(i_tuple[0],b_tuple[0]), min(i_tuple[1], b_tuple[1])))
     return overlaps
 
+def get_aggregation(times):
+    beaconA = sum(t for t, b in times if b == MAJORS[0])
+    beaconB = sum(t for t, b in times if b == MAJORS[1])
+    beaconC = sum(t for t, b in times if b == MAJORS[2])
+    beaconD = sum(t for t, b in times if b == MAJORS[3])
+    return_list = list()
+    if beaconA != 0: return_list.append((beaconA, MAJORS[0]))
+    if beaconB != 0: return_list.append((beaconB, MAJORS[1]))
+    if beaconC != 0: return_list.append((beaconC, MAJORS[2]))
+    if beaconD != 0: return_list.append((beaconD, MAJORS[3]))
+    return return_list
