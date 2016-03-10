@@ -83,10 +83,13 @@ def searchConnections(request):
     for _user in all_users:
         if _user != infected_user:
             user_readings = BeaconReading.objects.filter(time__gte=timezone.now()-timedelta(days=3), user=_user)
-            _infection_beacons = build_infection_dict(user_readings)
-            _infection_tuples = build_infection_tuples(_infection_beacons, user_readings)
-            _overlaps = find_overlaps(infection_tuples, _infection_tuples)
-            overlap_dict[_user.email.encode("ascii")] = _overlaps
+            if not user_readings:
+                continue
+            else:
+                _infection_beacons = build_infection_dict(user_readings)
+                _infection_tuples = build_infection_tuples(_infection_beacons, user_readings)
+                _overlaps = find_overlaps(infection_tuples, _infection_tuples)
+                overlap_dict[_user.email.encode("ascii")] = _overlaps
 
     # get beacons where overlaps occured
     for key in overlap_dict.keys():
