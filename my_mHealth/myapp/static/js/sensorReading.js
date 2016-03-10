@@ -5,6 +5,7 @@ var pics = {"abgundry@u.northwestern.edu":"austin",
 $(document).ready( function() {
     $("#infectionButton").click(function(e) {
         var email = $("#emailAddress").val();
+        var illness = $("#infectionName").val();
         console.log(email);
         $.ajax({
             url: "http://192.168.1.117:8000/searchConnections?email="+email,
@@ -19,7 +20,7 @@ $(document).ready( function() {
                 var keys = Object.keys(results);
                 var statements = [];
                 $("#results").append("<div class=\"row\"><div class=\"col-lg-5 col-lg-offset-4\">" +
-                                      "<h2>Infection Report requested for:</h2>"+
+                                      "<h2>Infection Report ("+illness+") requested for:</h2>"+
                                       "</div></div>"+
                                       "<div class=\"row\"><div class=\"col-lg-2 col-lg-offset-4\"><img src=\""+static_dir+pics[email]+".jpg\" class=\"img-circle\">" +
                                     "</div><div class=\"col-lg-4\"><h3>"+email+"</h3></div></div>"+
