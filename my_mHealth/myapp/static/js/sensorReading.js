@@ -41,6 +41,17 @@ $(document).ready( function() {
                                             "</div>"+
                                           "</li>"+
                                         "</ul>");
+                    $("#results").append("<ul class=\"person\">" +
+                                          "<li style=\"list-style-type: none;\" >"+
+                                            "<div class=\"col-lg-2\">" +
+                                              "<img src=\""+static_dir+pics[keys[i]]+".jpg\" class=\"img-circle\">" +
+                                            "</div>"+
+                                            "<div class=\"col-lg-9 col-lg-offset-1\">" +
+                                              "<h2>"+keys[i]+"</h2>" +
+                                              "<p>"+statements.join()+"</p>" +
+                                            "</div>"+
+                                          "</li>"+
+                                        "</ul>");
                 }
             }
         });
