@@ -81,7 +81,7 @@
                     <label for="infectionName">Infection</label>
                     <input type="text" class="form-control" id="infectionName" placeholder="Tuberculosis">
                 </div>
-                <button type="submit" id="infectionButton" class="btn btn-primary">Generate Report</button>
+                <button id="infectionButton" class="btn btn-primary">Generate Report</button>
             </form>
         </div>
 
@@ -92,45 +92,48 @@
 <!-- /.intro-header -->
 
 <a  name="infection-results"></a>
-<div class="infection-results">
+<div class="infection-results-section">
     <div class="container">
-        <div class="row">
+        <div class="row" id="results">
+            <ul class="person">
+              <img src="{% static "img/austin.jpg" %}" class="img-circle">
+              <h2>Circle</h2>
+              <p>The .img-circle class shapes the image to a circle (not available in IE8):</p>
+            </ul>
         </div>
     </div>
 </div>
 
 <!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <ul class="list-inline">
-                    <li>
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="footer-menu-divider">&sdot;</li>
-                    <li>
-                        <a href="#demo">Demo</a>
-                    </li>
-                    <li class="footer-menu-divider">&sdot;</li>
-                    <li>
-                        <a href="#paper">Paper</a>
-                    </li>
-                    <li class="footer-menu-divider">&sdot;</li>
-                    <li>
-                        <a href="#contact">Contact</a>
-                    </li>
-                </ul>
-                <p class="copyright text-muted small">Copyright &copy; Your Company 2014. All Rights Reserved</p>
-            </div>
+<div class="container" style="bottom: 0px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="list-inline">
+                <li>
+                    <a href="#">Home</a>
+                </li>
+                <li class="footer-menu-divider">&sdot;</li>
+                <li>
+                    <a href="#demo">Demo</a>
+                </li>
+                <li class="footer-menu-divider">&sdot;</li>
+                <li>
+                    <a href="#paper">Paper</a>
+                </li>
+                <li class="footer-menu-divider">&sdot;</li>
+                <li>
+                    <a href="#contact">Contact</a>
+                </li>
+            </ul>
+            <p class="copyright text-muted small">Copyright &copy; Your Company 2014. All Rights Reserved</p>
         </div>
     </div>
-</footer>
+</div>
 
 <!-- jQuery -->
 <script src="{% static "js/jquery.js" %}"></script>
 <script src="{% static "js/sensorReading.js" %}"></script>
-
+<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static "js/bootstrap.min.js" %}"></script>
 

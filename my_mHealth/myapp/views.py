@@ -1,9 +1,11 @@
 from django.http import HttpResponse
 from .models import ProximityReading, BeaconReading, DeviceUser
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 from django.utils import timezone
 import json
 from django.shortcuts import render_to_response
+
+MAJORS = ["38813", "62225", "30194", "7122"]
 
 # Create your views here.
 def index(request):
@@ -68,4 +70,85 @@ def searchConnections(request):
     infected_email = request.GET['email']
     infected_user = DeviceUser.objects.get(email=infected_email)
     readings_since_incubation = BeaconReading.objects.filter(time__gte=timezone.now()-timedelta(days=3), user=infected_user)
-    return HttpResponse(readings_since_incubation.values())
+
+    # build dictionary keyed on beacons that contains all readings for that beacon
+    infection_beacons = build_infection_dict(readings_since_incubation)
+
+    # create dictionary that will have tuples associated with enter/exits of beacons
+    infection_tuples = build_infection_tuples(infection_beacons, readings_since_incubation)
+
+    # search for other users
+    all_users = DeviceUser.objects.all()
+    overlap_dict = dict()
+    for _user in all_users:
+        if _user != infected_user:
+            user_readings = BeaconReading.objects.filter(time__gte=timezone.now()-timedelta(days=3), user=_user)
+            _infection_beacons = build_infection_dict(user_readings)
+            _infection_tuples = build_infection_tuples(_infection_beacons, user_readings)
+            _overlaps = find_overlaps(infection_tuples, _infection_tuples)
+            overlap_dict[_user.email.encode("ascii")] = _overlaps
+
+    # get beacons where overlaps occured
+    for key in overlap_dict.keys():
+        for i in range(len(overlap_dict[key])):
+            interval = overlap_dict[key].pop(0)
+            overlap_dict[key].append(((interval[1]-interval[0]).seconds, BeaconReading.objects.get(time=interval[0]).major.encode("ascii")))
+        overlap_dict[key] = get_aggregation(overlap_dict[key])
+
+    return HttpResponse(json.dumps(overlap_dict))
+
+def build_infection_dict(readings):
+    infection_dict = dict()
+    for reading in readings:
+        if not infection_dict.get(reading.major):
+            infection_dict[reading.major.encode("ascii")] = list()
+        infection_dict[reading.major].append(reading)
+
+    return infection_dict
+
+def build_infection_tuples(infection_dict, readings):
+    infection_tuples = dict()
+    last_reading = None
+    for key in infection_dict.keys():
+        infection_tuples[key] = list()
+
+    # edge case for exit without enter
+    if readings[0].status == 'exit':
+        infection_tuples[readings[0].major].append((timezone.now() - timedelta(days=3), readings.pop(0).time))
+
+    # edge case for enter without exit
+    if len(readings) % 2 != 0:
+        last_reading = readings.pop(len(readings) - 1)
+
+    # format statuses into tuples
+    for key in infection_dict.keys():
+        for reading in infection_dict[key]:
+            infection_tuples[key].append((infection_dict[key].pop(0).time, infection_dict[key].pop(0).time))
+
+    # add in last enter if applicable
+    if last_reading:
+        infection_tuples[last_reading.major].append((last_reading.time, timezone.now()))
+
+    return infection_tuples
+
+def find_overlaps(infected_tuples, bystander_tuples):
+    overlaps = list()
+    for key in infected_tuples.keys():
+        if bystander_tuples.get(key):
+            for i_tuple in infected_tuples[key]:
+                for b_tuple in bystander_tuples[key]:
+                    if (i_tuple[0] <= b_tuple[0] <= i_tuple[1]) or (b_tuple[0] <= i_tuple[0] <= b_tuple[1]):
+                        overlaps.append((max(i_tuple[0],b_tuple[0]), min(i_tuple[1], b_tuple[1])))
+    return overlaps
+
+def get_aggregation(times):
+    beaconA = sum(t for t, b in times if b == MAJORS[0])
+    beaconB = sum(t for t, b in times if b == MAJORS[1])
+    beaconC = sum(t for t, b in times if b == MAJORS[2])
+    beaconD = sum(t for t, b in times if b == MAJORS[3])
+    return_list = list()
+    if beaconA != 0: return_list.append((beaconA, MAJORS[0]))
+    if beaconB != 0: return_list.append((beaconB, MAJORS[1]))
+    if beaconC != 0: return_list.append((beaconC, MAJORS[2]))
+    if beaconD != 0: return_list.append((beaconD, MAJORS[3]))
+    return return_list
